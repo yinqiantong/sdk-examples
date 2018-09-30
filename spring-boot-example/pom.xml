@@ -6,7 +6,7 @@
 
     <groupId>com.yinqiantong.sdk.example</groupId>
     <artifactId>java-sdk-spring-boot-example</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.7</version>
     <name>example-for-yinqiantong</name>
 
     <parent>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.yinqiantong</groupId>
             <artifactId>java-sdk</artifactId>
-            <version>0.0.4</version>
+            <version>0.0.7</version>
         </dependency>
 
     </dependencies>

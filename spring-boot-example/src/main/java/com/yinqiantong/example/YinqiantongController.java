@@ -5,10 +5,7 @@ import com.yinqiantong.example.cros.Cros;
 import com.yinqiantong.model.NotifyRes;
 import com.yinqiantong.model.Options;
 import com.yinqiantong.model.Order;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -18,6 +15,10 @@ public class YinqiantongController {
     private static final String APP_ID = "00000000";
     private static final String APP_KEY = "1234567890123456";
     private static final String APP_SECRET = "12345678901234567890123456789012";
+
+    private String createClientOutTradeNo() {
+        return String.valueOf(System.currentTimeMillis());
+    }
 
     @Cros
     @RequestMapping("/order/create")
@@ -33,13 +34,15 @@ public class YinqiantongController {
                                 .setCode(code)
                                 .setMoney(money)
                                 .setClientIp(clientIp)
+                                .setClientOutTradeNo(createClientOutTradeNo())
+                                .setReturnUrl("https://yinqiantong.com")
                                 .setNotifyUrl("https://yinqiantong.com/test")
                 );
     }
 
     @Cros
     @RequestMapping("/order/query")
-    public Order queryOrder(String outTradeNo) throws Exception {
+    public Order queryOrder(@RequestParam("out_trade_no") String outTradeNo) throws Exception {
         // 1，判断您当前数据库的订单信息，如果订单已完成，直接返回
         // 2，如果订单未完成，调用 Yinqiantong.create(APP_ID, APP_KEY, APP_SECRET).getOrder(outTradeNo) 获取订单信息
         return Yinqiantong.create(APP_ID, APP_KEY, APP_SECRET).getOrder(outTradeNo);
